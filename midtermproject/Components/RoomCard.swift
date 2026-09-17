@@ -1,43 +1,55 @@
 import SwiftUI
 
 struct RoomCard: View {
-    
     let room: Room
-    
+
+    private var statusColor: Color {
+        room.status == "Good" ? .green : .orange
+    }
+
     var body: some View {
         HStack(spacing: 14) {
-            
-            Image(systemName: "building.2.fill")
-                .font(.title3)
-                .foregroundStyle(.green)
-                .frame(width: 45, height: 45)
-                .background(Color.green.opacity(0.1))
-                .clipShape(
-                    RoundedRectangle(cornerRadius: 10)
-                )
-            
-            VStack(alignment: .leading, spacing: 4) {
-                
+            ZStack {
+                RoundedRectangle(cornerRadius: 15)
+                    .fill(RPTheme.lightGreen)
+
+                Image(systemName: "door.left.hand.open")
+                    .font(.system(size: 24, weight: .medium))
+                    .foregroundStyle(RPTheme.green)
+            }
+            .frame(width: 55, height: 55)
+
+            VStack(alignment: .leading, spacing: 5) {
                 Text("Room \(room.number)")
-                    .font(.headline)
-                
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundStyle(RPTheme.text)
+
                 Text(room.building)
                     .font(.caption)
                     .foregroundStyle(.secondary)
-                
-                Text("\(room.capacity) seats")
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
+
+                HStack(spacing: 5) {
+                    Image(systemName: "person.2.fill")
+                        .font(.system(size: 10))
+
+                    Text("\(room.capacity) seats")
+                        .font(.caption2)
+                }
+                .foregroundStyle(.secondary)
             }
-            
-            Spacer()
-            
-            StatusBadge(status: room.status)
+
+            Spacer(minLength: 4)
+
+            VStack(alignment: .trailing, spacing: 9) {
+                StatusBadge(status: room.status)
+
+                Image(systemName: "chevron.right")
+                    .font(.caption.bold())
+                    .foregroundStyle(.tertiary)
+            }
         }
-        .padding()
-        .background(Color(.secondarySystemBackground))
-        .clipShape(
-            RoundedRectangle(cornerRadius: 14)
-        )
+        .padding(15)
+        .background(.white)
+        .clipShape(RoundedRectangle(cornerRadius: 18))
     }
 }
