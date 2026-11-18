@@ -32,3 +32,4 @@ struct StatusBadge: View {
         .clipShape(Capsule())
     }
 }
+
